@@ -6,6 +6,12 @@ This gem replaces the default ActiveRecord configurations system which typically
 [![Code Climate](https://codeclimate.com/github/ioquatix/activerecord-configurations.svg)](https://codeclimate.com/github/ioquatix/activerecord-configurations)
 [![Coverage Status](https://coveralls.io/repos/ioquatix/activerecord-configurations/badge.svg)](https://coveralls.io/r/ioquatix/activerecord-configurations)
 
+## Motivation
+
+The standard YAML file technique of specifying database configurations is cumbersome at best, and really only works well for a single database connection: there is no isolation between different sets of connections, and it's not possible to specify multiple `DATABASE_URL` values.
+
+We needed something to streamline and minimize the amount of configuration in this sensitive area of deployment. Making a mistake in a production system is a big problem. This is achieved by testing and convention over configuration.
+
 ## Installation
 
 Add this line to your application's Gemfile:
