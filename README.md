@@ -21,8 +21,48 @@ Add something like this to `db/environment.rb`
 ```ruby
 require 'active_record/configurations'
 
+class ActiveRecord::Base
+	extend ActiveRecord::Configurations
+	
+	configure(:production) do
+		prefix 'library'
+		adapter 'postgres'
+	end
 
+	configure(:development, parent: :production)
+end
+
+# pp ActiveRecord::Base.configurations
 ```
+
+This will setup the `development` and `production` configurations, which can be overridden by specifying the `LIBRARY_DSN` environment variable.
+
+### Multiple Databases
+
+You can easily have more than one database connection.
+
+```ruby
+class UsersModel < ActiveRecord::Base
+	self.abstract_class = true
+	
+	extend ActiveRecord::Configurations
+	
+	configure(:production) do
+		prefix 'users'
+		adapter 'mysql2'
+	end
+
+	configure(:development, parent: :production)
+end
+
+# pp UsersModel.configurations
+
+class User < UsersModel
+	# ...
+end
+```
+
+As this has a different prefix, the connection can be overridden by specifying `USERS_DSN`.
 
 ## Contributing
 
