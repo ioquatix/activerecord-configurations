@@ -59,11 +59,11 @@ module ActiveRecord
 			
 			case uri.scheme
 			when 'postgres'
-				environment[:adapter] = 'postgres'
+				environment[:adapter] = 'postgresql'
 			when 'mysql'
 				environment[:adapter] = 'mysql2'
 			else
-				raise ArgumentError.new("Unsupported database access: #{uri.scheme.inspect}")
+				environment[:adapter] = uri.scheme
 			end
 			
 			if username = uri.user

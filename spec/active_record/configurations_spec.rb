@@ -47,7 +47,7 @@ describe ActiveRecord::Configurations do
 		expect(model.configurations).to include("production")
 		
 		configuration = model.configurations["production"]
-		expect(configuration['adapter']).to be == 'postgres'
+		expect(configuration['adapter']).to be == 'postgresql'
 		expect(configuration['username']).to be == 'bob'
 		expect(configuration['password']).to be == 'p4ssw0rd'
 		expect(configuration['database']).to be == 'lots_of_data'
@@ -56,13 +56,13 @@ describe ActiveRecord::Configurations do
 	it "should use defaults" do
 		model.configure(:production) do
 			prefix 'recipes'
-			adapter 'postgres'
+			adapter 'postgresql'
 		end
 		
 		expect(model.configurations).to include("production")
 		
 		configuration = model.configurations["production"]
-		expect(configuration['adapter']).to be == 'postgres'
+		expect(configuration['adapter']).to be == 'postgresql'
 		expect(configuration['username']).to be_nil
 		expect(configuration['password']).to be_nil
 		expect(configuration['database']).to be == 'recipes_production'
