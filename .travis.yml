@@ -1,6 +1,17 @@
-sudo: false
 language: ruby
+sudo: false
 rvm:
-  - 2.3.2
-env: COVERAGE=true
-before_install: gem install bundler -v 1.13.6
+  - 2.1
+  - 2.2
+  - 2.3
+  - 2.4
+  - ruby-head
+  - jruby-head
+  - rbx-2
+env:
+  - COVERAGE=true
+matrix:
+  allow_failures:
+    - rvm: "rbx-2"
+    - rvm: "ruby-head"
+    - rvm: "jruby-head"
