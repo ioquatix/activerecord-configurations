@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 # Copyright, 2016, by Samuel G. D. Williams. <http://www.codeotaku.com>
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,8 +20,43 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-module ActiveRecord
-	module Configurations
-		VERSION = "0.3.0"
+require 'active_record'
+require 'active_record/configurations'
+
+class Parent < ActiveRecord::Base
+	extend ActiveRecord::Configurations
+	
+	configure(:test) do
+		adapter 'sqlite3'
+		database 'parent.sqlite3'
+	end
+end
+
+class Child < ActiveRecord::Base
+	extend ActiveRecord::Configurations
+	
+	configure(:test) do
+		adapter 'sqlite3'
+		database 'child.sqlite3'
+	end
+end
+
+describe ActiveRecord::Configurations do
+	it "should establish connection" do
+		expect(Parent).to_not be_connected
+		expect(Child).to_not be_connected
+		
+		Parent.establish_connection(:test)
+		Parent.connection
+		
+		expect(Parent).to be_connected
+		expect(Child).to_not be_connected
+		
+		Child.establish_connection(:test)
+		Child.connection
+		expect(Child).to be_connected
+		
+		expect(Parent.connection_config[:database]).to be == "parent.sqlite3"
+		expect(Child.connection_config[:database]).to be == "child.sqlite3"
 	end
 end

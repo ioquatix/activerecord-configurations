@@ -113,5 +113,20 @@ module ActiveRecord
 			
 			self.configurations[name.to_s] = configuration.stringify_keys
 		end
+		
+		# This is a quick hack to work around https://github.com/rails/rails/pull/32135
+		def establish_connection(config = nil)
+			raise "Anonymous class is not allowed." unless name
+		
+			config ||= DEFAULT_ENV.call.to_sym
+			spec_name = self == Base ? "primary" : name
+			self.connection_specification_name = spec_name
+		
+			resolver = ConnectionAdapters::ConnectionSpecification::Resolver.new(self.configurations)
+			spec = resolver.resolve(config).symbolize_keys
+			spec[:name] = spec_name
+		
+			connection_handler.establish_connection(spec)
+		end
 	end
 end
