@@ -35,6 +35,9 @@ describe ActiveRecord::Configurations do
 	it "should define a default configuration" do
 		expect(model.environments).to include(:default)
 		expect(model.configurations).to include("default")
+		
+		expect(model.configuration?(:default)).to be_truthy
+		expect(model.configuration?(:test)).to be_falsey
 	end
 	
 	it "should define a new configuration using a DSN defined from the environment" do

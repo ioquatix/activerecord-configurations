@@ -46,13 +46,13 @@ describe ActiveRecord::Configurations do
 		expect(Parent).to_not be_connected
 		expect(Child).to_not be_connected
 		
-		Parent.establish_connection(:test)
+		Parent.setup_connection(:test)
 		Parent.connection
 		
 		expect(Parent).to be_connected
 		expect(Child).to_not be_connected
 		
-		Child.establish_connection(:test)
+		Child.setup_connection(:test)
 		Child.connection
 		expect(Child).to be_connected
 		

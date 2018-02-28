@@ -116,6 +116,24 @@ module ActiveRecord
 			end
 		end
 		
+		def configuration? name
+			self.configurations.include? name.to_s
+		end
+		
+		def requires_connection? name
+			if self.connected?
+				return false
+			end
+			
+			return self.configuration?(name)
+		end
+		
+		def setup_connection(name = DATABASE_ENV)
+			if requires_connection?(name)
+				self.establish_connection(name)
+			end
+		end
+		
 		def configure(name, parent: :default, &block)
 			parent = self.lookup_environment(parent)
 			
