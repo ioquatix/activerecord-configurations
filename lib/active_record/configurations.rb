@@ -18,11 +18,29 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-require_relative "configurations/version"
+require_relative 'configurations/version'
 
 require 'build/environment'
+require 'active_record'
 
 module ActiveRecord
+	class Base
+		# This is a quick hack to work around https://github.com/rails/rails/pull/32135
+		def self.establish_connection(config = nil)
+			raise "Anonymous class is not allowed." unless name
+	
+			config ||= DEFAULT_ENV.call.to_sym
+			spec_name = self == Base ? "primary" : name
+			self.connection_specification_name = spec_name
+	
+			resolver = ConnectionAdapters::ConnectionSpecification::Resolver.new(self.configurations)
+			spec = resolver.resolve(config).symbolize_keys
+			spec[:name] = spec_name
+	
+			connection_handler.establish_connection(spec)
+		end
+	end
+	
 	module Configurations
 		def self.extended(child)
 			child.instance_variable_set(:@environments, {})
@@ -112,21 +130,6 @@ module ActiveRecord
 			end
 			
 			self.configurations[name.to_s] = configuration.stringify_keys
-		end
-		
-		# This is a quick hack to work around https://github.com/rails/rails/pull/32135
-		def establish_connection(config = nil)
-			raise "Anonymous class is not allowed." unless name
-		
-			config ||= DEFAULT_ENV.call.to_sym
-			spec_name = self == Base ? "primary" : name
-			self.connection_specification_name = spec_name
-		
-			resolver = ConnectionAdapters::ConnectionSpecification::Resolver.new(self.configurations)
-			spec = resolver.resolve(config).symbolize_keys
-			spec[:name] = spec_name
-		
-			connection_handler.establish_connection(spec)
 		end
 	end
 end
