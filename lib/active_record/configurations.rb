@@ -134,14 +134,14 @@ module ActiveRecord
 			end
 		end
 		
-		def configure(name, parent: :default, &block)
+		def configure(name, parent: :default, **options, &block)
 			parent = self.lookup_environment(parent)
 			
-			environment = Build::Environment.new(parent, {name: name.to_s}, &block)
+			environment = Build::Environment.new(parent, {name: name.to_s}, name: name, **options, &block)
 			
 			self.environments[name] = environment
 			
-			configuration = environment.to_hash
+			configuration = environment.to_h
 			
 			if dsn = configuration[:dsn]
 				resolve_database_dsn(dsn, configuration)
