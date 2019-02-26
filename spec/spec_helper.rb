@@ -1,5 +1,5 @@
 
-reuqire 'rspec/covered'
+require 'covered/rspec'
 require 'bundler/setup'
 require 'active_record/configurations'
 
