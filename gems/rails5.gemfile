@@ -1,0 +1,4 @@
+
+eval_gemfile("../Gemfile")
+
+gem 'rails', '~> 5.0'

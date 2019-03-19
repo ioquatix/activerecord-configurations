@@ -9,6 +9,10 @@ matrix:
     - rvm: 2.5
     - rvm: 2.6
     - rvm: 2.6
+      gemfile: gems/rails5.gemfile
+    - rvm: 2.6
+      gemfile: gems/rails6.gemfile
+    - rvm: 2.6
       env: COVERAGE=BriefSummary,Coveralls
     - rvm: ruby-head
     - rvm: jruby-head
@@ -17,3 +21,4 @@ matrix:
     - rvm: ruby-head
     - rvm: jruby-head
     - rvm: truffleruby
+    - gemfile: gems/rails6.gemfile
