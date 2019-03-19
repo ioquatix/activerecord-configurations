@@ -32,11 +32,13 @@ module ActiveRecord
 			config ||= DEFAULT_ENV.call.to_sym
 			spec_name = self == Base ? "primary" : name
 			self.connection_specification_name = spec_name
-	
-			resolver = ConnectionAdapters::ConnectionSpecification::Resolver.new(self.configurations)
-			spec = resolver.resolve(config).symbolize_keys
+			
+			# Because of YAML, the config name must be a String.
+			# Because I think this is slightly stupid, I turn everything back into symbols.
+			spec = self.configurations.fetch(config.to_s, config).symbolize_keys
+			
 			spec[:name] = spec_name
-	
+			
 			connection_handler.establish_connection(spec)
 		end
 	end
