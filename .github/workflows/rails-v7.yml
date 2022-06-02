@@ -1,0 +1,31 @@
+name: Development
+
+on: [push, pull_request]
+
+env:
+  BUNDLE_GEMFILE: gems/rails-v5.gemfile
+
+jobs:
+  test:
+    name: ${{matrix.ruby}} on ${{matrix.os}}
+    runs-on: ${{matrix.os}}-latest
+    
+    strategy:
+      matrix:
+        os:
+          - ubuntu
+        
+        ruby:
+          - "3.0"
+          - "3.1"
+        
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{matrix.ruby}}
+        bundler-cache: true
+    
+    - name: Run tests
+      timeout-minutes: 5
+      run: bundle exec rspec

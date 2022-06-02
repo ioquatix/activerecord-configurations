@@ -2,9 +2,7 @@
 
 This gem replaces the default ActiveRecord configurations system which typically involves a YAML file.
 
-[![Build Status](https://secure.travis-ci.org/ioquatix/activerecord-configurations.svg)](http://travis-ci.org/ioquatix/activerecord-configurations)
-[![Code Climate](https://codeclimate.com/github/ioquatix/activerecord-configurations.svg)](https://codeclimate.com/github/ioquatix/activerecord-configurations)
-[![Coverage Status](https://coveralls.io/repos/ioquatix/activerecord-configurations/badge.svg)](https://coveralls.io/r/ioquatix/activerecord-configurations)
+[![Development Status](https://github.com/ioquatix/activerecord-configurations/workflows/Development/badge.svg)](https://github.com/ioquatix/activerecord-configurations/actions?workflow=Development)
 
 ## Motivation
 
@@ -16,7 +14,7 @@ We needed something to streamline and minimize the amount of configuration in th
 
 Add this line to your application's Gemfile:
 
-```ruby
+``` ruby
 gem 'activerecord-configurations'
 ```
 
@@ -24,7 +22,7 @@ gem 'activerecord-configurations'
 
 Add something like this to `db/environment.rb`
 
-```ruby
+``` ruby
 require 'active_record/configurations'
 
 class ActiveRecord::Base
@@ -47,7 +45,7 @@ This will setup the `development` and `production` configurations, which can be 
 
 You can easily have more than one database connection.
 
-```ruby
+``` ruby
 class UsersModel < ActiveRecord::Base
 	self.abstract_class = true
 	
@@ -72,16 +70,16 @@ As this has a different prefix, the connection can be overridden by specifying `
 
 ## Contributing
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+1.  Fork it
+2.  Create your feature branch (`git checkout -b my-new-feature`)
+3.  Commit your changes (`git commit -am 'Add some feature'`)
+4.  Push to the branch (`git push origin my-new-feature`)
+5.  Create new Pull Request
 
 ## See Also
 
-- [ActiveRecord::Rack](https://github.com/ioquatix/activerecord-rack)
-- [ActiveRecord::Migrations](https://github.com/ioquatix/activerecord-migrations)
+  - [ActiveRecord::Rack](https://github.com/ioquatix/activerecord-rack)
+  - [ActiveRecord::Migrations](https://github.com/ioquatix/activerecord-migrations)
 
 ## License
 
@@ -106,4 +104,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-

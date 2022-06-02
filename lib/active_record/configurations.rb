@@ -28,7 +28,7 @@ module ActiveRecord
 		# This is a quick hack to work around https://github.com/rails/rails/pull/32135
 		def self.establish_connection(config = nil)
 			raise "Anonymous class is not allowed." unless name
-	
+			
 			config ||= DEFAULT_ENV.call.to_sym
 			spec_name = self == Base ? "primary" : name
 			self.connection_specification_name = spec_name
@@ -38,6 +38,7 @@ module ActiveRecord
 			spec = self.configurations.fetch(config.to_s, config).symbolize_keys
 			
 			spec[:name] = spec_name
+			spec[:base] = self
 			
 			connection_handler.establish_connection(spec)
 		end
